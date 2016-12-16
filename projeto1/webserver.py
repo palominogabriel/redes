@@ -1,65 +1,57 @@
 #!/usr/bin/env python
 import cgi
 import cgitb
+from maquina import Maquina
 cgitb.enable()
-
-class Maquina():
-    def __init__(self, id=None, ps=None, ps_args=None, df=None, df_args=None, finger=None, finger_args=None, uptime=None, uptime_args=None):
-        self.__id = id
-        self.__ps = ps
-        self.__ps_args = ps_args
-        self.__df = df
-        self.__df_args = df_args
-        self.__finger = finger
-        self.__finger_args = finger_args
-        self.__uptime = uptime
-        self.__uptime_args = uptime_args
-
-    @property
-    def id(self):
-        return str(self.__id)
-
-    @id.setter
-    def id(self,value):
-        self.__id = value
-
-    @property
-    def ps(self):
-        if self.__ps == 'None':
-            return ''
-        else:
-            return str(self.__ps)
-
-    @ps.setter
-    def ps(self,value):
-        self.__ps = value
-
-    @property
-    def ps_args(self):
-        return self.__ps_args
-
-    @ps_args.setter
-    def ps_args(self, value):
-        self.__ps_args = value
-
-    def __str__(self):
-        return 'Maquina' + self.id + 'ps=' + self.ps
-
-
-mq1 = Maquina(1)
-
-
-print("Content-Type: text/html;charset=utf-8\r\n\r\n")
-print("<html>")
-print("<title>TESTE</title>")
-
-mq1.id = 3
-print(mq1.id + 'ps=' + mq1.ps)
 
 form = cgi.FieldStorage()
 
+maq1 = Maquina(1)
 
-print ("<br><br>" + str(form.getvalue("maq1_ps")))
-print ("<br>" + str(form.getvalue("maq1-ps")))
+maq1.ps = form.getvalue('maq1_ps')
+maq1.ps_args = form.getvalue('maq1-ps')
+maq1.df = form.getvalue('maq1_df')
+maq1.df_args = form.getvalue('maq1-df')
+maq1.finger = form.getvalue('maq1_finger')
+maq1.finger_args = form.getvalue('maq1-finger')
+maq1.uptime = form.getvalue('maq1_uptime')
+maq1.uptime_args = form.getvalue('maq1-uptime')
 
-print("</html>")
+maq2 = Maquina(2)
+
+maq2.ps = form.getvalue('maq2_ps')
+maq2.ps_args = form.getvalue('maq2-ps')
+maq2.df = form.getvalue('maq2_df')
+maq2.df_args = form.getvalue('maq2-df')
+maq2.finger = form.getvalue('maq2_finger')
+maq2.finger_args = form.getvalue('maq2-finger')
+maq2.uptime = form.getvalue('maq2_uptime')
+maq2.uptime_args = form.getvalue('maq2-uptime')
+
+maq3 = Maquina(3)
+
+maq3.ps = form.getvalue('maq3_ps')
+maq3.ps_args = form.getvalue('maq3-ps')
+maq3.df = form.getvalue('maq3_df')
+maq3.df_args = form.getvalue('maq3-df')
+maq3.finger = form.getvalue('maq3_finger')
+maq3.finger_args = form.getvalue('maq3-finger')
+maq3.uptime = form.getvalue('maq3_uptime')
+maq3.uptime_args = form.getvalue('maq3-uptime')
+
+print 'Content-Type: text/html;charset=utf-8\r\n\r\n'
+print '<html>'
+print '<head>'
+print '<title>Redes - Projeto 1</title>'
+print '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">'
+print '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>'
+print '</head>'
+print '<body style="background-image:url(http://www.evohosting.co.uk/wp-content/uploads/2014/12/Pattern-christmas-elements-seamless-vector-011-e1418392819694.jpg); background-repeat: repeat;">'
+print '<div style="background-color: #ffffff; height:100%; width:100%; opacity: 0.9; z-index:-1; position: fixed;"> </div>'
+
+print maq1
+print maq2
+print maq3
+
+print '</body>'
+print '</html>'
