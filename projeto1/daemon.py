@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import socket
 import sys
+import subprocess
 
 if len(sys.argv) < 3:
     print 'Erro: argumento faltante. ex: --port 9001'
@@ -21,7 +22,23 @@ else:
         while True:
             data = conn.recv(buffer_size)
             if not data: break
-            print 'Received data: ', data
+            if data == "TESTE":
+                '''
+                import subprocess
+                p = subprocess.Popen("date", stdout=subprocess.PIPE, shell=True)
+                (output, err) = p.communicate()
+                print "Today is", output
+
+                ou
+
+                out = check_output(["ntpq", "-p"])
+                '''
+
+                out = subprocess.check_output('ps')
+
+                print 'Received data: ', data
+                print 'Command ps executed: ', out
+
 
         conn.close()
         break
