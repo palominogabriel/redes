@@ -108,6 +108,7 @@ class Maquina():
     def uptime_args(self, value):
         self.__uptime_args = value
 
+
     def __str__(self):
         return str('<div style="width: 33%; display: inline-block; text-align: center;">'
                    + '<h2> <b> Maquina ' + str(self.id) + '</h1> </b>'

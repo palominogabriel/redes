@@ -3,6 +3,7 @@ import cgi
 import cgitb
 import socket
 from maquina import Maquina
+from header import Header
 
 cgitb.enable()
 
@@ -51,6 +52,7 @@ print '</head>'
 print '<body style="background-image:url(http://www.evohosting.co.uk/wp-content/uploads/2014/12/Pattern-christmas-elements-seamless-vector-011-e1418392819694.jpg); background-repeat: repeat;">'
 print '<div style="background-color: #ffffff; height:100%; width:100%; opacity: 0.9; z-index:-1; position: fixed;"> </div>'
 
+''' SOCKET IMPLEMENTATION
 ip = '127.0.0.1'
 pm1 = 9001
 pm2 = 9002
@@ -61,6 +63,11 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((ip,pm1))
 s.send('TESTE')
 s.close()
+'''
+
+head = Header()
+
+
 
 print maq1
 print maq2
