@@ -71,7 +71,7 @@ head = Header()
 
 print maq1
 print maq2
-print maq3
+print maq1
 
 print '</body>'
 print '</html>'

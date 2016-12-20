@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 class Header():
     def __init__(self):
         self.__h_version = 2

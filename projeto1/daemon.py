@@ -2,7 +2,7 @@
 import socket
 import sys
 import subprocess
-
+#teste
 if len(sys.argv) < 3:
     print 'Erro: argumento faltante. ex: --port 9001'
 else:
