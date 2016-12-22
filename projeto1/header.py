@@ -140,10 +140,8 @@ class Header():
         self.__options = value
         if value != '':
             self.options_len = len(value) * 8
-            self.total_length = 160 + self.options_len
         else:
             self.options_len = 0
-            self.total_length = 160
 
 
     #Fields Length
@@ -225,6 +223,10 @@ class Header():
             return addr
     def make_header(self):
         # Falta calcular checksum antes de criar o pacote
+        if self.options != '':
+            self.options_len = len(self.options) * 8
+            self.total_length = 160 + self.options_len
+
         header = ''
         header += str(format(self.version,'#0' + str(self.version_len + 2) + 'b').replace('0b',''))
         header += str(format(self.IHL,'#0' + str(self.IHL_len + 2) + 'b').replace('0b',''))
@@ -238,7 +240,6 @@ class Header():
         header += str(format(self.checksum, '#0' + str(self.checksum_len + 2) + 'b').replace('0b', ''))
         header += self.addr_to_bin(self.source_addr)
         header += self.addr_to_bin(self.destination_addr)
-
         if self.options != '':
             header += str(format(int(binascii.hexlify(self.options), 16), '#0' + str(self.options_len + 2) + 'b').replace('0b', ''))
 
