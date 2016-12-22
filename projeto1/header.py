@@ -16,19 +16,19 @@ class Header():
         self.__checksum_len = 16  # bits
         self.__source_addr_len = 32  # bits
         self.__destination_addr_len = 32  # bits
-        self.__options_len = 32  # bits
+        self.__options_len = 0  # bits
 
         if header == None:
             self.__version = 2
-            self.__IHL = 0
+            self.__IHL = 5
             self.__type_service = 0
-            self.__total_length = 0
-            self.__identification = 0
-            self.__flags = 0
+            self.__total_length = 160 # Options vazio
+            self.__identification = 10 # Numero de sequencia escolhido 1010b
+            self.__flags = 0 # Requisição
             self.__fragment_offset = 0
-            self.__time_live = 1
-            self.__protocol = 0
-            self.__checksum = 0
+            self.__time_live = 10
+            self.__protocol = 1 # ps
+            self.__checksum = 0 # Precisa Calcular
             self.__source_addr = '127.0.0.1'
             self.__destination_addr = '127.0.0.1'
             self.__options = ''
@@ -138,6 +138,13 @@ class Header():
     @options.setter
     def options(self, value):
         self.__options = value
+        if value != '':
+            self.options_len = len(value) * 8
+            self.total_length = 160 + self.options_len
+        else:
+            self.options_len = 0
+            self.total_length = 160
+
 
     #Fields Length
 
@@ -217,6 +224,7 @@ class Header():
         else:
             return addr
     def make_header(self):
+        # Falta calcular checksum antes de criar o pacote
         header = ''
         header += str(format(self.version,'#0' + str(self.version_len + 2) + 'b').replace('0b',''))
         header += str(format(self.IHL,'#0' + str(self.IHL_len + 2) + 'b').replace('0b',''))
@@ -232,7 +240,6 @@ class Header():
         header += self.addr_to_bin(self.destination_addr)
 
         if self.options != '':
-            self.options_len = (len(self.options) * 8)
             header += str(format(int(binascii.hexlify(self.options), 16), '#0' + str(self.options_len + 2) + 'b').replace('0b', ''))
 
         return header
