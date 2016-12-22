@@ -53,6 +53,43 @@ print '</head>'
 print '<body style="background-image:url(http://www.evohosting.co.uk/wp-content/uploads/2014/12/Pattern-christmas-elements-seamless-vector-011-e1418392819694.jpg); background-repeat: repeat;">'
 print '<div style="background-color: #ffffff; height:100%; width:100%; opacity: 0.9; z-index:-1; position: fixed;"> </div>'
 
+header_maq1_ps = Header()
+header_maq1_df = Header()
+header_maq1_finger = Header()
+header_maq1_uptime = Header()
+
+header_maq1_ps.protocol = 1
+header_maq1_ps.options = maq1.ps_args
+header_maq1_df.protocol = 2
+header_maq1_df.options = maq1.df_args
+header_maq1_finger.protocol = 3
+header_maq1_finger.options = maq1.finger_args
+header_maq1_uptime.protocol = 4
+header_maq1_uptime.options = maq1.uptime_args
+
+ip = '127.0.0.1'
+pm1 = 9001
+pm2 = 9002
+pm3 = 9003
+buff_size = 1024
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((ip,pm1))
+
+if maq1.ps != '':
+    s.send(header_maq1_ps.make_header())
+    maq1.ps_result = s.recv(buff_size)
+if maq1.df != '':
+    s.send(header_maq1_df.make_header())
+    maq1.df_result = s.recv(buff_size)
+if maq1.finger != '':
+    s.send(header_maq1_finger.make_header())
+    maq1.finger_result = s.recv(buff_size)
+if maq1.uptime != '':
+    s.send(header_maq1_uptime.make_header())
+    maq1.uptime_result = s.recv(buff_size)
+s.close()
+
 print maq1
 print maq2
 print maq3

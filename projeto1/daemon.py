@@ -2,7 +2,7 @@
 import socket
 import sys
 import subprocess
-#teste
+from header import Header
 if len(sys.argv) < 3:
     print 'Erro: argumento faltante. ex: --port 9001'
 else:
@@ -20,8 +20,15 @@ else:
         print 'Connection address: ', addr
 
         while True:
-            data = conn.recv(buffer_size)
-            if not data: break
+            serialialized_header = conn.recv(buffer_size)
+            if not serialialized_header: break
+
+            header = Header(serialialized_header)
+            if header.protocol == 1:
+
+
+
+
             if data == "TESTE":
                 '''
                 import subprocess

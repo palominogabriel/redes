@@ -11,6 +11,10 @@ class Maquina():
         self.__finger_args = finger_args
         self.__uptime = uptime
         self.__uptime_args = uptime_args
+        self.__ps_result = ''
+        self.__df_result = ''
+        self.__finger_result = ''
+        self.__uptime_result = ''
 
     @property
     def id(self):
@@ -108,6 +112,38 @@ class Maquina():
     def uptime_args(self, value):
         self.__uptime_args = value
 
+    @property
+    def ps_result(self):
+            return self.__ps_result
+
+    @ps_result.setter
+    def ps_result(self, value):
+        self.__ps_result = value
+
+    @property
+    def df_result(self):
+        return self.__df_result
+
+    @df_result.setter
+    def df_result(self, value):
+        self.__df_result = value
+
+    @property
+    def finger_result(self):
+        return self.__finger_result
+
+    @finger_result.setter
+    def finger_result(self, value):
+        self.__finger_result = value
+
+    @property
+    def uptime_result(self):
+        return self.__uptime_result
+
+    @uptime_result.setter
+    def uptime_result(self, value):
+        self.__uptime_result = value
+
 
     def __str__(self):
         return str('<div style="width: 33%; display: inline-block; text-align: center;">'
@@ -118,5 +154,9 @@ class Maquina():
                    + (self.finger if self.finger else '') + (' ' + self.finger_args + '<br>' if self.finger and self.finger_args else '<br>')
                    + (self.uptime if self.uptime else '') + (' ' + self.uptime_args + '<br> <br>' if self.uptime and self.uptime_args else '<br> <br>')
                    + '<h5> Output </h5>'
+                   + self.ps_result + '<br>'
+                   + self.df_result + '<br>'
+                   + self.finger_result + '<br>'
+                   + self.uptime_result + '<br>'
                    + '</div>'
                    )
