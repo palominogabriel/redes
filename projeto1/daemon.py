@@ -32,6 +32,8 @@ else:
                 out = subprocess.check_output(["ps", args])
 
                 print 'out',out
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.bind((ip, porta))
                 s.sendall(out)
 
             if header.protocol == 2:
@@ -41,6 +43,8 @@ else:
                 out = subprocess.check_output(["df", args])
 
                 print 'out',out
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.bind((ip, porta))
                 s.sendall(out)
 
             if header.protocol == 3:
@@ -50,6 +54,8 @@ else:
                 out = subprocess.check_output(["df", args])
 
                 print 'out',out
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.bind((ip, porta))
                 s.sendall(out)
 
             if header.protocol == 4:
@@ -59,6 +65,8 @@ else:
                 out = subprocess.check_output(["uptime", args])
 
                 print 'out',out
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.bind((ip, porta))
                 s.sendall(out)
 
 
