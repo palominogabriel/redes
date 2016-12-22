@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import binascii
 
-
 class Header():
     def __init__(self, header=None):
         self.__version_len = 4  # bits
@@ -221,6 +220,42 @@ class Header():
             return str(n1) + '.' + str(n2) + '.' + str(n3) + '.' + str(n4)
         else:
             return addr
+
+    def cksum(self, ck_header):
+
+        size = len(ck_header)
+        cksum = 0
+        pointer = 0
+
+        # O loop principal adiciona os conjunto de 2 bytes.Eles são primeiro convertidos em strings e
+        # depois concatenados juntos, convertidos em inteiros e, em seguida, adicionados à soma.
+        while size > 1:
+            cksum += int((str("%02x" % (ck_header[pointer],)) +
+                          str("%02x" % (ck_header[pointer + 1],))), 16)
+            size -= 2
+            pointer += 2
+        if size:  # Possibilidade do tamanho do header ser impar
+            cksum += ck_header[pointer]
+
+        cksum = (cksum >> 16) + (cksum & 0xffff)
+        cksum += (cksum >> 16)
+
+        return (~cksum) & 0xFFFF
+
+    # converte um cabeçalho serializado em uma lista de words de 16 bits
+    def serialToList(self, serialized):
+        palavra = []
+        hexas = {}
+        j = 0
+        for i in serialized:
+            palavra.append(i)
+            if (len(palavra) == 16):
+                palavra = "".join(palavra)
+                hexas[j] = int(palavra, 2)
+                palavra = []
+                j += 1
+        return hexas
+
     def make_header(self):
         # Falta calcular checksum antes de criar o pacote
         if self.options != '':
@@ -242,8 +277,36 @@ class Header():
         header += self.addr_to_bin(self.destination_addr)
         if self.options != '':
             header += str(format(int(binascii.hexlify(self.options), 16), '#0' + str(self.options_len + 2) + 'b').replace('0b', ''))
-
         return header
+
+    def make_header_cs(self):
+        serial = self.make_header()
+        list16 = self.serialToList(serial)
+        self.checksum = self.cksum(list16)
+
+        if self.options != '':
+            self.options_len = len(self.options) * 8
+            self.total_length = 160 + self.options_len
+
+        header = ''
+        header += str(format(self.version, '#0' + str(self.version_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.IHL, '#0' + str(self.IHL_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.type_service, '#0' + str(self.type_service_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.total_length, '#0' + str(self.total_length_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.identification, '#0' + str(self.identification_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.flags, '#0' + str(self.flags_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.fragment_offset, '#0' + str(self.fragment_offset_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.time_live, '#0' + str(self.time_live_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.protocol, '#0' + str(self.protocol_len + 2) + 'b').replace('0b', ''))
+        header += str(format(self.checksum, '#0' + str(self.checksum_len + 2) + 'b').replace('0b', ''))
+        header += self.addr_to_bin(self.source_addr)
+        header += self.addr_to_bin(self.destination_addr)
+        if self.options != '':
+            header += str(
+                format(int(binascii.hexlify(self.options), 16), '#0' + str(self.options_len + 2) + 'b').replace('0b',
+                                                                                                                ''))
+        return header
+
 
     def break_header(self,header):
         self.version = int(header[:4],2)
@@ -262,3 +325,17 @@ class Header():
             self.options = binascii.unhexlify('%x' % int(header[160:],2))
         else:
             self.options = ''
+
+'''#teste checksum
+head = Header()
+head.flags = 1
+headS = head.make_header_cs()
+headB = Header()
+headB.break_header(headS)
+headB.checksum = 0
+#headB.flags = 0
+print("Checksum de Head: ", head.checksum, "Flags: ", head.flags)
+print("Checksum de HeadB: ", headB.cksum(headB.serialToList(headB.make_header())), "Flags: ", headB.flags)'''
+
+
+
