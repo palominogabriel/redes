@@ -66,12 +66,42 @@ s.close()
 '''
 
 head = Header()
+header_s = head.make_header()
+
+'''
+h = header_s[:4]
+h += header_s[4:8]
+h += header_s[8:16]
+h += header_s[16:32]
+
+print header_s[:4]
+print header_s[5:9]
 
 
+count = 0
+for c in h:
+    count += 1
+
+print count
+
+for s in header:
+    print s + '<br>'
+
+
+#print header_s + '<br>'
+print header[0] + '<br>'
+print header_s[:32] + '<br><br>'
+print header[1] + '<br>'
+print header_s[33:64] + '<br><br>'
+print header_s[65:96] + '<br>'
+print header_s[97:128] + '<br>'
+print header_s[129:160] + '<br>'
+print header_s[160:] + '<br>'
+'''
 
 print maq1
 print maq2
-print maq1
+print maq3
 
 print '</body>'
 print '</html>'
