@@ -113,35 +113,100 @@ try:
 except socket.error:
     print('connection error')
 
+#Maquina 1
 if maq1.ps != '':
     try:
 
 
-        print 'SENDING :', header_maq1_ps
         serialized = header_maq1_ps.make_header_cs()
+
+        print 'SENDING :', serialized
         s.sendall(serialized)
 
         # Look for the response
 
-        out = s.recv(1024)
+        out = s.recv(10024)
         maq1.ps_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
+
+if maq1.df != '':
+
+    try:
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm1))
+        except socket.error:
+            print('connection error')
+
+        serialized = header_maq1_df.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq1.df_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
+
+
+if maq1.finger != '':
+
+    try:
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm1))
+        except socket.error:
+            print('connection error')
+
+        serialized = header_maq1_finger.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq1.finger_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
+
+
+if maq1.uptime != '':
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm1))
+        except socket.error:
+            print('connection error')
+
+        serialized = header_maq1_uptime.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq1.uptime_result = out
         print 'received "%s"' % out
 
     finally:
         print 'closing socket'
         s.close()
-
-'''
-if maq1.df != '':
-    s.send(header_maq1_df.make_header())
-    maq1.df_result = s.recv(buff_size)
-if maq1.finger != '':
-    s.send(header_maq1_finger.make_header())
-    maq1.finger_result = s.recv(buff_size)
-if maq1.uptime != '':
-    s.send(header_maq1_uptime.make_header())
-    maq1.uptime_result = s.recv(buff_size)
-
 
 #Maquina2
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -151,18 +216,92 @@ except socket.error:
     print('connection error')
 
 if maq2.ps != '':
-    s.send(header_maq2_ps.make_header())
-    maq2.ps_result = s.recv(buff_size)
-if maq2.df != '':
-    s.send(header_maq2_df.make_header())
-    maq2.df_result = s.recv(buff_size)
-if maq2.finger != '':
-    s.send(header_maq2_finger.make_header())
-    maq2.finger_result = s.recv(buff_size)
-if maq2.uptime != '':
-    s.send(header_maq2_uptime.make_header())
-    maq2.uptime_result = s.recv(buff_size)
+    try:
 
+        serialized = header_maq2_ps.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq2.ps_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
+if maq2.df != '':
+
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm2))
+        except socket.error:
+            print('connection error')
+
+        serialized = header_maq2_df.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq2.df_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
+if maq2.finger != '':
+
+    try:
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm2))
+        except socket.error:
+            print('connection error')
+
+        serialized = header_maq2_finger.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq2.finger_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
+if maq2.uptime != '':
+    try:
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm2))
+        except socket.error:
+            print('connection error')
+
+        serialized = header_maq2_uptime.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq2.uptime_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print 'closing socket'
+        s.close()
 
 #Maquina3
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -172,20 +311,90 @@ except socket.error:
     print('connection error')
 
 if maq3.ps != '':
-    s.send(header_maq3_ps.make_header())
-    maq3.ps_result = s.recv(buff_size)
+    try:
+
+        serialized = header_maq3_ps.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq3.ps_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
 if maq3.df != '':
-    s.send(header_maq3_df.make_header())
-    maq3.df_result = s.recv(buff_size)
+
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm3))
+        except socket.error:
+            print('connection error')
+
+        serialized = header_maq3_df.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq3.df_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
 if maq3.finger != '':
-    s.send(header_maq3_finger.make_header())
-    maq3.finger_result = s.recv(buff_size)
+
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm3))
+        except socket.error:
+            print('connection error')
+
+        serialized = header_maq3_finger.make_header_cs()
+
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq3.finger_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print ''
+
 if maq3.uptime != '':
-    s.send(header_maq3_uptime.make_header())
-    maq3.uptime_result = s.recv(buff_size)
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((ip, pm3))
+        except socket.error:
+            print('connection error')
 
+        serialized = header_maq3_uptime.make_header_cs()
 
-'''
+        print 'SENDING :', serialized
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(10024)
+        maq3.uptime_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print 'closing socket'
+        s.close()
 
 
 
