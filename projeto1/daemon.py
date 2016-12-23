@@ -47,7 +47,7 @@ else:
                 print >> sys.stderr, 'sending data back out to the client'
                 s.sendall(out)
                 print 'enviou e recebeu'
-            '''
+
             if header.protocol == 2:
                 args = header.options.replace('|', '').replace(';', '').replace('>', '')
 
@@ -62,7 +62,7 @@ else:
                 args = header.options.replace('|', '').replace(';', '').replace('>', '')
 
                 print 'args', args
-                out = subprocess.check_output(["df", args])
+                out = subprocess.check_output(["finger", args])
 
                 print 'out',out
                 print >> sys.stderr, 'sending data back out to the client'
@@ -79,7 +79,7 @@ else:
                 print >> sys.stderr, 'sending data back out to the client'
                 s.sendall(out)
 
-            '''
+
             print 'Received data: ', serialialized_header
 
         finally:
