@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#teste
 class Maquina():
     def __init__(self, id=None, ps=None, ps_args=None, df=None, df_args=None, finger=None, finger_args=None, uptime=None, uptime_args=None):
         self.__id = id

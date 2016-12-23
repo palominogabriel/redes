@@ -2,6 +2,7 @@
 import cgi
 import cgitb
 import socket
+import time
 from maquina import Maquina
 from header import Header
 import binascii
@@ -113,8 +114,24 @@ except socket.error:
     print('connection error')
 
 if maq1.ps != '':
-    s.send(header_maq1_ps.make_header())
-    maq1.ps_result = s.recv(1024)
+    try:
+
+
+        print 'SENDING :', header_maq1_ps
+        serialized = header_maq1_ps.make_header_cs()
+        s.sendall(serialized)
+
+        # Look for the response
+
+        out = s.recv(1024)
+        maq1.ps_result = out
+        print 'received "%s"' % out
+
+    finally:
+        print 'closing socket'
+        s.close()
+
+'''
 if maq1.df != '':
     s.send(header_maq1_df.make_header())
     maq1.df_result = s.recv(buff_size)
@@ -169,28 +186,8 @@ if maq3.uptime != '':
 
 
 '''
-try:
 
-    # Send data
-    s.sendall(header_maq1_ps.make_header())
 
-    # Look for the response
-    amount_received = 0
-    amount_expected = len(header_maq1_ps.make_header())
-
-    while amount_received < amount_expected:
-        data = s.recv(buff_size)
-        amount_received += len(data)
-
-    maq1.ps_result = s.recv(buff_size)
-
-finally:
-    print >> sys.stderr, 'closing socket'
-    sock.close()
-
-'''
-
-s.close()
 
 print maq1
 print maq2
