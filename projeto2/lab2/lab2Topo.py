@@ -98,8 +98,8 @@ class Lab2Topo( Topo ):
         defaultIP2 = '198.168.0.241/30'  # IP address for r1-eth1
         routerFilial = self.addNode('r1', cls=LinuxRouter, ip=defaultIP2)
 
-        self.addLink(switchLan8, routerSede, intfName2='r1-eth1', params2={'ip': '192.168.8.1/24'})
-        self.addLink(switchLan9, routerSede, intfName2='r1-eth2', params2={'ip': '192.168.9.1/24'})
+        self.addLink(switchLan8, routerFilial, intfName2='r1-eth1', params2={'ip': '192.168.8.1/24'})
+        self.addLink(switchLan9, routerFilial, intfName2='r1-eth2', params2={'ip': '192.168.9.1/24'})
 
 
         #Router ----- Router
