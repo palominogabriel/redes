@@ -17,8 +17,22 @@ h h    h h     h h     *   h h   h h
 
 from mininet.topo import Topo
 from mininet.net import Mininet
+from mininet.node import Node
 from mininet.cli import CLI
 from mininet.log import setLogLevel, info
+
+class LinuxRouter( Node ):
+    "A Node with IP forwarding enabled."
+
+    def config( self, **params ):
+        super( LinuxRouter, self).config( **params )
+        # Enable forwarding on the router
+        self.cmd( 'sysctl net.ipv4.ip_forward=1' )
+
+    def terminate( self ):
+        self.cmd( 'sysctl net.ipv4.ip_forward=0' )
+        super( LinuxRouter, self ).terminate()
+
 
 class Lab2Topo( Topo ):
 
@@ -72,6 +86,24 @@ class Lab2Topo( Topo ):
         self.addLink(h10, switchLan9)
 
 
+        #Routers
+        defaultIP = '198.168.0.240/30'  # IP address for r0-eth1
+        routerSede = self.addNode('r0', cls=LinuxRouter, ip=defaultIP)
+
+        self.addLink(switchLan1, routerSede, intfName2='r0-eth1', params2={'ip': '192.168.1.1/24'})
+        self.addLink(switchLan2, routerSede, intfName2='r0-eth2', params2={'ip': '192.168.2.1/24'})
+        self.addLink(switchLan3, routerSede, intfName2='r0-eth3', params2={'ip': '192.168.3.1/24'})
+
+
+        defaultIP2 = '198.168.0.241/30'  # IP address for r1-eth1
+        routerFilial = self.addNode('r1', cls=LinuxRouter, ip=defaultIP2)
+
+        self.addLink(switchLan8, routerSede, intfName2='r1-eth1', params2={'ip': '192.168.8.1/24'})
+        self.addLink(switchLan9, routerSede, intfName2='r1-eth2', params2={'ip': '192.168.9.1/24'})
+
+
+        #Router ----- Router
+        self.addLink(routerSede,routerFilial)
 
 
 
